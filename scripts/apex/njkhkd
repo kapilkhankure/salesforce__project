@@ -1,0 +1,31 @@
+public with sharing class njkhkd{
+   @AuraEnabled(cacheable=true)
+    public static List<Meeting__c> getMeetingsByDate(string filterDate){
+        list<Meeting__c>Meetinglist= new list<Meeting__c>();
+        
+        if (String.isNotBlank(filterDate)) {
+            Date filterDateValue = Date.valueOf(filterDate);
+            Meetinglist = [SELECT Id, Name, Meeting_Date__c,Priority__c,Description__c FROM Meeting__c WHERE  Meeting_Date__c= :filterDateValue];
+            system.debug(Meetinglist);
+        }
+        
+        return Meetinglist;
+        
+    }
+    
+    @AuraEnabled(cacheable=true)
+    public static List<Contact> getGuestDetailsByMeetingId(Id meetingId) {
+        List<Contact> contactList = new List<Contact>();
+        
+        if (meetingId != null) {
+            contactList = [SELECT Id, Name, Email, Phone, Title 
+                           FROM Contact 
+                           WHERE Id IN (SELECT Guest__c 
+                                        FROM Meeting__c 
+                                        WHERE Id = :meetingId)];
+            System.debug(contactList);
+        }
+        
+        return contactList;
+    }
+}
