@@ -1,0 +1,18 @@
+.meeting-item {
+    border: 1px solid #d8dde6;
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.priority-high {
+    color: red;
+}
+
+.priority-medium {
+    color: orange;
+}
+
+.priority-low {
+    color: green;
+}

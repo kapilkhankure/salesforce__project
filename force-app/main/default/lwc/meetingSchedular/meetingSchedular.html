@@ -1,0 +1,35 @@
+<template>
+    <lightning-card title="Meetings" icon-name="standard:events">
+        <div class="slds-p-around_medium">
+            <lightning-input label="Filter Date" type="date" onchange={handleDateChange}></lightning-input>
+        </div>
+        
+        <template if:true={meetings}>
+            <lightning-datatable 
+                data={meetings} 
+                columns={columns} 
+                key-field="Id" 
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </template>
+        
+        <template if:true={selectedMeeting}>
+            <lightning-card title="Guest Details" icon-name="standard:contact">
+                <div class="slds-m-bottom_medium">
+                    <button class="slds-button slds-button_brand" onclick={handleJoinClick}>Join Link</button>
+                </div>
+            
+                <template if:true={guestDetails}>
+                    <lightning-datatable 
+                        data={guestDetails} 
+                        columns={guestColumns} 
+                        key-field="Id">
+                    </lightning-datatable>
+                </template>
+                <template if:false={guestDetails}>
+                    <p>No guest details available for this meeting.</p>
+                </template>
+            </lightning-card>
+        </template>
+    </lightning-card>
+</template>
